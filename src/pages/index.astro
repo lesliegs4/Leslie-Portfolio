@@ -1,17 +1,134 @@
 ---
+import "../styles/global.css";
+import Navigation from "../components/Navigation.astro";
 
+const pageTitle = "Leslie Garcia-Sanchez";
 ---
 
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Portfolio of Leslie Garcia-Sanchez — engineer, researcher, and builder."
+    />
+    <title>{pageTitle}</title>
+  </head>
+
+  <body>
+    <Navigation />
+
+    <main>
+      <!-- HERO -->
+      <section id="home" class="hero">
+        <p class="eyebrow">Hello, I'm</p>
+
+        <h1>Leslie Garcia-Sanchez</h1>
+
+        <p class="hero-description">
+          Computer engineer, cybersecurity student, researcher, builder,
+          and collector of side quests.
+        </p>
+
+        <a href="#about">More about me ↓</a>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about">
+        <p class="section-number">01</p>
+        <h2>About Me</h2>
+
+        <p>
+          This is where my introduction, photos, interests, and little pieces
+          of my life will eventually live.
+        </p>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects">
+        <p class="section-number">02</p>
+        <h2>Projects</h2>
+
+        <div class="project-grid">
+          <article>
+            <p>2026 / iOS</p>
+            <h3>TriageLens</h3>
+            <p>
+              Camera-based vital sign estimation and emergency response tools
+              designed for first responders.
+            </p>
+          </article>
+
+          <article>
+            <p>2026 / Embedded Systems</p>
+            <h3>JellySafe</h3>
+            <p>
+              An ESP32-based monitoring system designed to automate jellyfish
+              habitat care.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience">
+        <p class="section-number">03</p>
+        <h2>Professional Experience</h2>
+
+        <div class="experience-list">
+          <article>
+            <p>2026</p>
+            <h3>Viasat</h3>
+            <p>Software Development Engineering Intern</p>
+          </article>
+
+          <article>
+            <p>2025</p>
+            <h3>RWTH Aachen University</h3>
+            <p>UROP Research Intern</p>
+          </article>
+
+          <article>
+            <p>2024</p>
+            <h3>Sustainability Page</h3>
+            <p>Software Development Engineering Intern</p>
+          </article>
+
+          <article>
+            <p>2023</p>
+            <h3>Apple Design Discovery Program</h3>
+            <p>College Track Scholar Experience Leader</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- PUBLICATIONS -->
+      <section id="press">
+        <p class="section-number">04</p>
+        <h2>Publications + Press</h2>
+
+        <p>
+          Research, awards, features, press, and other things with my name
+          attached to them will live here.
+        </p>
+      </section>
+
+      <!-- WRITING -->
+      <section id="writing">
+        <p class="section-number">05</p>
+        <h2>Writing + Photos</h2>
+
+        <p>
+          A collection of writing, photography, travel notes, and things I
+          want to remember.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Made by Leslie Garcia-Sanchez.</p>
+    </footer>
+  </body>
 </html>

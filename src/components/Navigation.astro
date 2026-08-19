@@ -1,0 +1,42 @@
+<header class="site-header">
+  <a class="logo" href="#home">Leslie Garcia-Sanchez</a>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#press">Publications + Press</a>
+    <a href="#writing">Writing + Photos</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1.5rem var(--page-padding);
+  }
+
+  .logo {
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  nav a {
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 750px) {
+    nav {
+      display: none;
+    }
+  }
+</style>

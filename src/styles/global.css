@@ -1,0 +1,185 @@
+/* ------------------------- */
+/* GLOBAL VARIABLES          */
+/* ------------------------- */
+
+:root {
+  --paper: #f4f0e8;
+  --ink: #171717;
+  --pink: #ed9fbd;
+  --soft-pink: #f4d5e1;
+  --gray: #77736d;
+
+  --page-padding: clamp(1.5rem, 5vw, 6rem);
+}
+
+
+/* ------------------------- */
+/* RESET                     */
+/* ------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  background: var(--paper);
+  color: var(--ink);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ------------------------- */
+/* GENERAL SECTIONS          */
+/* ------------------------- */
+
+section {
+  padding: 6rem var(--page-padding);
+}
+
+section:not(.hero) {
+  min-height: 70vh;
+}
+
+.section-number {
+  margin-bottom: 0.5rem;
+
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+}
+
+h2 {
+  margin-top: 0;
+
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1;
+}
+
+
+/* ------------------------- */
+/* HERO                      */
+/* ------------------------- */
+
+.hero {
+  min-height: calc(100vh - 80px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: var(--page-padding);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+}
+
+.hero h1 {
+  max-width: 1000px;
+
+  margin: 0;
+
+  font-size: clamp(4rem, 10vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.hero-description {
+  max-width: 600px;
+
+  margin: 2rem 0;
+
+  font-size: 1.2rem;
+}
+
+
+/* ------------------------- */
+/* PROJECTS                  */
+/* ------------------------- */
+
+.project-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+
+  gap: 2rem;
+
+  margin-top: 3rem;
+}
+
+.project-grid article {
+  min-height: 300px;
+
+  padding: 2rem;
+
+  border: 1px solid var(--ink);
+}
+
+
+/* ------------------------- */
+/* EXPERIENCE                */
+/* ------------------------- */
+
+.experience-list article {
+  display: grid;
+
+  grid-template-columns: 100px 1fr 1fr;
+
+  gap: 2rem;
+
+  padding: 2rem 0;
+
+  border-top: 1px solid var(--ink);
+}
+
+.experience-list article:last-child {
+  border-bottom: 1px solid var(--ink);
+}
+
+
+/* ------------------------- */
+/* FOOTER                    */
+/* ------------------------- */
+
+footer {
+  padding: 3rem var(--page-padding);
+
+  border-top: 1px solid var(--ink);
+}
+
+
+/* ------------------------- */
+/* MOBILE                    */
+/* ------------------------- */
+
+@media (max-width: 750px) {
+  nav {
+    display: none;
+  }
+
+  .experience-list article {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
