@@ -1,0 +1,115 @@
+<section id="home" class="hero">
+  <div class="hero-intro">
+    <p class="eyebrow">Hello, I'm</p>
+
+    <h1>
+      Leslie
+      <span>Garcia-Sanchez</span>
+    </h1>
+
+    <p class="hero-description">
+      Computer engineer, cybersecurity student, researcher,
+      builder, and collector of side quests.
+    </p>
+
+    <a class="hero-link" href="#about">
+      More about me ↓
+    </a>
+  </div>
+
+  <div class="hero-note">
+    <p>currently:</p>
+    <span>building things + figuring it out along the way</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 4rem;
+
+    padding: var(--page-padding);
+  }
+
+  .hero-intro {
+    max-width: 900px;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+
+    color: var(--gray);
+  }
+
+  h1 {
+    margin: 0;
+
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  .hero-description {
+    max-width: 550px;
+
+    margin: 2rem 0;
+
+    font-size: 1.2rem;
+  }
+
+  .hero-link {
+    display: inline-block;
+
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+
+    padding-bottom: 0.2rem;
+  }
+
+  .hero-note {
+    max-width: 220px;
+
+    padding: 1.5rem;
+
+    background: var(--soft-pink);
+
+    transform: rotate(3deg);
+  }
+
+  .hero-note p {
+    margin: 0 0 0.5rem;
+
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-note span {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 800px) {
+    .hero {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .hero-note {
+      transform: rotate(-2deg);
+    }
+  }
+</style>

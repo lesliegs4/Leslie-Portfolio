@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
 
 const pageTitle = "Leslie Garcia-Sanchez";
 ---
@@ -21,30 +23,8 @@ const pageTitle = "Leslie Garcia-Sanchez";
     <Navigation />
 
     <main>
-      <!-- HERO -->
-      <section id="home" class="hero">
-        <p class="eyebrow">Hello, I'm</p>
-
-        <h1>Leslie Garcia-Sanchez</h1>
-
-        <p class="hero-description">
-          Computer engineer, cybersecurity student, researcher, builder,
-          and collector of side quests.
-        </p>
-
-        <a href="#about">More about me ↓</a>
-      </section>
-
-      <!-- ABOUT -->
-      <section id="about">
-        <p class="section-number">01</p>
-        <h2>About Me</h2>
-
-        <p>
-          This is where my introduction, photos, interests, and little pieces
-          of my life will eventually live.
-        </p>
-      </section>
+      <Hero />
+      <About />
 
       <!-- PROJECTS -->
       <section id="projects">

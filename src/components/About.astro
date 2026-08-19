@@ -1,0 +1,265 @@
+<section id="about" class="about">
+  <div class="about-heading">
+    <p class="section-number">01</p>
+    <h2>About Me</h2>
+
+    <p class="handwritten-note">
+      a little bit about who I am ↓
+    </p>
+  </div>
+
+  <div class="about-grid">
+    <div class="photo-area">
+      <div class="photo-placeholder">
+        <img
+            src="/images/about/leslie-portrait.jpeg"
+            alt="Leslie Garcia-Sanchez"
+        />
+    </div>
+
+      <p class="photo-caption">
+        probably somewhere building, traveling, or taking too many photos
+      </p>
+    </div>
+
+    <div class="about-copy">
+      <p class="intro">
+        Hi! I'm Leslie — a computer engineering and computer science student
+        with an interest in cybersecurity, embedded systems, and building
+        technology that interacts with the real world.
+      </p>
+
+      <p>
+        I've worked across software engineering, security research, IoT, and
+        design-focused environments. I especially enjoy projects where I can
+        understand how something works from the hardware level all the way up
+        to the user experience.
+      </p>
+
+      <p>
+        Outside of engineering, I love traveling, documenting the places I go,
+        trying new things, and collecting little experiences that usually end
+        up turning into another idea or side project.
+      </p>
+
+      <div class="quick-facts">
+        <div class="fact">
+          <span class="fact-label">studying</span>
+          <p>Computer Engineering + Computer Science</p>
+        </div>
+
+        <div class="fact">
+          <span class="fact-label">also studying</span>
+          <p>Cybersecurity</p>
+        </div>
+
+        <div class="fact">
+          <span class="fact-label">interested in</span>
+          <p>Security, embedded systems, IoT + product development</p>
+        </div>
+
+        <div class="fact">
+          <span class="fact-label">currently</span>
+          <p>finishing school + figuring out what's next</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-doodle">
+    <span>✦</span>
+    <p>more than just the résumé</p>
+  </div>
+</section>
+
+<style>
+  .about {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-heading {
+    margin-bottom: 4rem;
+  }
+
+  .section-number {
+    margin: 0 0 0.5rem;
+
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+
+    color: var(--gray);
+  }
+
+  h2 {
+    margin: 0;
+
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.9;
+  }
+
+  .handwritten-note {
+    display: inline-block;
+
+    margin: 1rem 0 0 4rem;
+
+    font-size: 1.1rem;
+    font-style: italic;
+
+    transform: rotate(-3deg);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.8fr) minmax(300px, 1.2fr);
+
+    gap: clamp(3rem, 8vw, 8rem);
+
+    align-items: start;
+  }
+
+  .photo-area {
+    position: relative;
+  }
+
+  .photo-placeholder {
+    aspect-ratio: 4 / 5;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+
+    background: #ded8ce;
+
+    border: 10px solid white;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+    transform: rotate(-3deg);
+  }
+
+  .photo-placeholder span {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+
+    color: var(--gray);
+  }
+
+  .photo-caption {
+    max-width: 280px;
+
+    margin: 1.5rem auto 0;
+
+    font-size: 0.85rem;
+    text-align: center;
+
+    transform: rotate(2deg);
+  }
+
+  .about-copy {
+    max-width: 700px;
+  }
+
+  .about-copy p {
+    font-size: 1.05rem;
+  }
+
+  .intro {
+    margin-top: 0;
+
+    font-size: clamp(1.4rem, 2vw, 1.8rem) !important;
+    line-height: 1.4;
+  }
+
+  .quick-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 1rem;
+
+    margin-top: 3rem;
+  }
+
+  .fact {
+    padding: 1.25rem;
+
+    border-top: 1px solid var(--ink);
+  }
+
+  .fact:nth-child(2) {
+    background: var(--soft-pink);
+
+    transform: rotate(1deg);
+  }
+
+  .fact:nth-child(3) {
+    transform: rotate(-1deg);
+  }
+
+  .fact-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+
+    color: var(--gray);
+  }
+
+  .fact p {
+    margin: 0.5rem 0 0;
+
+    font-size: 0.95rem;
+  }
+
+  .about-doodle {
+    position: absolute;
+
+    right: 4%;
+    bottom: 4rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    transform: rotate(4deg);
+  }
+
+  .about-doodle span {
+    font-size: 2rem;
+  }
+
+  .about-doodle p {
+    margin: 0;
+
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 800px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .photo-area {
+      max-width: 400px;
+    }
+
+    .quick-facts {
+      grid-template-columns: 1fr;
+    }
+
+    .about-doodle {
+      position: static;
+
+      margin-top: 3rem;
+
+      justify-content: flex-end;
+    }
+
+    .handwritten-note {
+      margin-left: 1rem;
+    }
+  }
+</style>

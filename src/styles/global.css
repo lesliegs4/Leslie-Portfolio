@@ -77,43 +77,6 @@ h2 {
 
 
 /* ------------------------- */
-/* HERO                      */
-/* ------------------------- */
-
-.hero {
-  min-height: calc(100vh - 80px);
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  padding: var(--page-padding);
-}
-
-.eyebrow {
-  margin: 0 0 1rem;
-}
-
-.hero h1 {
-  max-width: 1000px;
-
-  margin: 0;
-
-  font-size: clamp(4rem, 10vw, 9rem);
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-}
-
-.hero-description {
-  max-width: 600px;
-
-  margin: 2rem 0;
-
-  font-size: 1.2rem;
-}
-
-
-/* ------------------------- */
 /* PROJECTS                  */
 /* ------------------------- */
 
