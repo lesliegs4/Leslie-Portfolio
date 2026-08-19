@@ -1,41 +1,145 @@
-<header class="site-header">
-  <a class="logo" href="#home">Leslie Garcia-Sanchez</a>
+---
+const sections = [
+  { number: "01", label: "About", href: "#about" },
+  { number: "02", label: "Projects", href: "#projects" },
+  { number: "03", label: "Experience", href: "#experience" },
+  { number: "04", label: "Press", href: "#press" },
+  { number: "05", label: "Writing", href: "#writing" },
+];
+---
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#experience">Experience</a>
-    <a href="#press">Publications + Press</a>
-    <a href="#writing">Writing + Photos</a>
+<header class="masthead">
+  <div class="masthead-top">
+    <p class="label masthead-vol">Portfolio &middot; Vol. 01</p>
+
+    <a class="masthead-name" href="#home">Leslie Garcia&#8209;Sanchez</a>
+
+    <p class="label masthead-year">Est. Los Angeles</p>
+  </div>
+
+  <nav class="masthead-nav" aria-label="Sections">
+    <ol>
+      {
+        sections.map(({ number, label, href }) => (
+          <li>
+            <a href={href}>
+              <span class="nav-number">{number}</span>
+              <span class="nav-label">{label}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
   </nav>
 </header>
 
 <style>
-  .site-header {
-    display: flex;
-    justify-content: space-between;
+  .masthead {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    background: rgba(245, 240, 230, 0.86);
+    backdrop-filter: blur(8px);
+
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  /* Top line: volume, name, place — the printed running head */
+  .masthead-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    gap: 1rem;
 
-    padding: 1.5rem var(--page-padding);
+    padding: 0.75rem var(--page-padding) 0.6rem;
   }
 
-  .logo {
-    font-weight: 700;
+  .masthead-top p {
+    margin: 0;
+  }
+
+  .masthead-year {
+    text-align: right;
+  }
+
+  .masthead-name {
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+
+    color: var(--ink);
     text-decoration: none;
   }
 
-  nav {
+  /* Contents row, doubling as navigation */
+  .masthead-nav {
+    border-top: 2px solid var(--rule);
+  }
+
+  .masthead-nav ol {
     display: flex;
-    gap: 1.5rem;
+    gap: clamp(1.25rem, 3vw, 2.75rem);
+
+    margin: 0;
+    padding: 0.5rem var(--page-padding) 0.55rem;
+
+    list-style: none;
+
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 
-  nav a {
+  .masthead-nav ol::-webkit-scrollbar {
+    display: none;
+  }
+
+  .masthead-nav a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+
+    white-space: nowrap;
     text-decoration: none;
-    font-size: 0.9rem;
   }
 
-  @media (max-width: 750px) {
-    nav {
+  .nav-number {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--pink-deep);
+  }
+
+  .nav-label {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s ease;
+  }
+
+  .masthead-nav a:hover .nav-label,
+  .masthead-nav a:focus-visible .nav-label {
+    border-bottom-color: var(--pink);
+  }
+
+  @media (max-width: 720px) {
+    .masthead-top {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 0.2rem;
+
+      text-align: center;
+    }
+
+    .masthead-year {
       display: none;
     }
   }

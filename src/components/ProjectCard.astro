@@ -1,7 +1,10 @@
 ---
+import Doodle from "./Doodle.astro";
+import Tape from "./Tape.astro";
 import { withBase } from "../utils/withBase";
 
 interface Props {
+  index: string;
   title: string;
   year: string;
   type: string;
@@ -9,9 +12,13 @@ interface Props {
   image?: string;
   video?: string;
   award?: string;
+  note?: string;
+  /** Mirrors the layout so consecutive cards alternate across the spread */
+  flip?: boolean;
 }
 
 const {
+  index,
   title,
   year,
   type,
@@ -19,127 +26,227 @@ const {
   image,
   video,
   award,
+  note,
+  flip = false,
 } = Astro.props;
 ---
 
-<article class="project-card">
+<article
+  class={`project-card ${flip ? "is-flipped" : ""} ${video ? "has-video" : ""}`}
+>
   <div class="project-media">
-    {image && (
-      <img
-        src={withBase(image)}
-        alt={`${title} project`}
+    <div class="print media-frame">
+      <Tape
+        tone={flip ? "pink" : "beige"}
+        width="126px"
+        rotate={flip ? 9 : -9}
+        class="media-tape"
       />
-    )}
 
-    {video && (
-      <video
-        controls
-        muted
-        playsinline
-      >
-        <source src={withBase(video)} type="video/mp4" />
-        Your browser does not support video playback.
-      </video>
-    )}
+      {
+        image && (
+          <img
+            class="photo"
+            src={withBase(image)}
+            alt={`${title} project`}
+            loading="lazy"
+          />
+        )
+      }
+
+      {
+        video && (
+          <video class="photo" controls muted playsinline preload="metadata">
+            <source src={withBase(video)} type="video/mp4" />
+            Your browser does not support video playback.
+          </video>
+        )
+      }
+    </div>
+
+    <p class="caption media-caption">
+      <span class="label">Fig. {index}</span>
+      {title}, {year}
+    </p>
   </div>
 
   <div class="project-content">
     <div class="project-meta">
-      <span>{year}</span>
-      <span>{type}</span>
+      <span class="label">{year}</span>
+      <span class="meta-divider" aria-hidden="true">/</span>
+      <span class="label">{type}</span>
     </div>
 
     <h3>{title}</h3>
 
-    {award && (
-      <p class="award">
-        ✦ {award}
-      </p>
-    )}
+    {
+      award && (
+        <p class="award">
+          <Doodle type="sparkle" width="16px" color="var(--pink-deep)" />
+          {award}
+        </p>
+      )
+    }
 
-    <p class="description">
-      {description}
-    </p>
+    <p class="description">{description}</p>
+
+    {
+      note && (
+        <p class="hand project-note">
+          <Doodle type="arrow-right" width="42px" color="var(--gray-light)" />
+          {note}
+        </p>
+      )
+    }
   </div>
 </article>
 
 <style>
   .project-card {
     display: grid;
-    grid-template-columns: minmax(250px, 1fr) minmax(250px, 1fr);
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
 
-    gap: 2rem;
-
-    padding: 2rem;
-
-    border: 1px solid var(--ink);
-
-    background: var(--paper);
+    padding: clamp(1.5rem, 3vw, 2.5rem) 0;
   }
 
-  .project-media {
-    min-height: 300px;
+  /* Alternating spread: media swaps sides on every other card */
+  .project-card.is-flipped .project-media {
+    order: 2;
   }
 
-  .project-media img,
-  .project-media video {
+  /* ---- media ---- */
+
+  .media-frame {
+    position: relative;
+  }
+
+  .media-frame :global(.media-tape) {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    margin-left: -63px;
+    z-index: 2;
+  }
+
+  .media-frame img,
+  .media-frame video {
     width: 100%;
-    height: 100%;
-
+    aspect-ratio: 4 / 3;
     object-fit: cover;
 
-    display: block;
+    background: var(--paper-deep);
   }
 
-  .project-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  /* Screen recordings are portrait, so the frame follows the source
+     shape and shows the whole app instead of cropping it to 4:3 */
+  .has-video .project-media {
+    max-width: 340px;
+    margin-inline: auto;
   }
+
+  .media-frame video {
+    aspect-ratio: 1170 / 2532;
+    object-fit: contain;
+
+    /* Video controls shouldn't be desaturated along with the frame */
+    filter: grayscale(0.85) contrast(1.08);
+  }
+
+  .media-frame video:hover {
+    filter: grayscale(0) contrast(1);
+  }
+
+  .media-caption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    margin: 0.85rem 0 0;
+    padding-top: 0.45rem;
+
+    font-style: italic;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .media-caption .label {
+    font-style: normal;
+    color: var(--pink-deep);
+  }
+
+  /* ---- content ---- */
 
   .project-meta {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
 
     margin-bottom: 1rem;
+    padding-bottom: 0.7rem;
 
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-
-    color: var(--gray);
+    border-bottom: 1px solid var(--hairline);
   }
 
-  h3 {
-    margin: 0;
-
-    font-size: clamp(2rem, 4vw, 4rem);
-    line-height: 0.95;
+  .meta-divider {
+    font-size: 0.7rem;
+    color: var(--gray-light);
   }
 
+  .project-content h3 {
+    font-style: italic;
+  }
+
+  /* Award reads like a rubber stamp taped to the page */
   .award {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+
     width: fit-content;
-    margin: 1.5rem 0 0;
-    padding: 0.5rem 0.8rem;
-    background: var(--soft-pink);
-    transform: rotate(-2deg);
-    font-size: 0.85rem;
+    margin: 1.25rem 0 0;
+    padding: 0.5rem 0.85rem;
+
+    font-family: var(--font-sans);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+
+    background: var(--blush);
+    border: 1px solid var(--blush-warm);
+    transform: rotate(-1.5deg);
   }
 
   .description {
-    max-width: 550px;
-    margin-top: 1.5rem;
-    font-size: 1rem;
+    max-width: 46ch;
+    margin: 1.5rem 0 0;
+    font-size: 0.98rem;
   }
 
-  @media (max-width: 800px) {
+  .project-note {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    margin: 1.5rem 0 0;
+    transform: rotate(-1deg);
+  }
+
+  @media (max-width: 860px) {
     .project-card {
       grid-template-columns: 1fr;
+      gap: 2rem;
     }
 
-    .project-media {
-      min-height: auto;
+    /* Keep the image above the copy regardless of the flip */
+    .project-card.is-flipped .project-media {
+      order: 0;
+    }
+
+    .description {
+      max-width: none;
     }
   }
 </style>

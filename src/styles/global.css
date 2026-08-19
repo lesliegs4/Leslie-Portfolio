@@ -1,123 +1,412 @@
-/* ------------------------- */
-/* GLOBAL VARIABLES          */
-/* ------------------------- */
+/* =========================================================
+   LESLIE GARCIA-SANCHEZ — editorial scrapbook / digital zine
+   Design system: warm ivory paper, black-and-white photography,
+   blush + bubblegum accents, serif display, sans captions,
+   handwritten annotations, tape, torn edges, photocopy grain.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   TOKENS
+   --------------------------------------------------------- */
 
 :root {
-  --paper: #f4f0e8;
-  --ink: #171717;
-  --pink: #ed9fbd;
-  --soft-pink: #f4d5e1;
-  --gray: #77736d;
+  /* paper + ink */
+  --paper: #f5f0e6;
+  --paper-warm: #efe8da;
+  --paper-deep: #e6ddca;
+  --card: #fbf8f2;
+  --ink: #14110f;
+  --ink-soft: #423c35;
+  --gray: #857d72;
+  --gray-light: #b6ad9f;
 
-  --page-padding: clamp(1.5rem, 5vw, 6rem);
+  /* accents */
+  --pink: #e87fa8;
+  --pink-deep: #d4527f;
+  --blush: #f7dde6;
+  --blush-warm: #f2cdd9;
+
+  /* materials */
+  --tape: rgba(229, 214, 178, 0.62);
+  --tape-pink: rgba(240, 190, 210, 0.5);
+  --hairline: rgba(20, 17, 15, 0.18);
+  --rule: rgba(20, 17, 15, 0.85);
+
+  /* type */
+  --font-display: "Bodoni Moda Variable", "Didot", "Times New Roman", serif;
+  --font-sans: "Archivo Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-hand: "Caveat Variable", "Bradley Hand", "Segoe Script", cursive;
+
+  /* layout */
+  --page-padding: clamp(1.25rem, 5vw, 6rem);
+  --measure: 62ch;
 }
 
+/* ---------------------------------------------------------
+   RESET
+   --------------------------------------------------------- */
 
-/* ------------------------- */
-/* RESET                     */
-/* ------------------------- */
-
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  /* leave room for the sticky masthead when jumping to anchors */
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
 
-  background: var(--paper);
-  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 380;
+  line-height: 1.65;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+  color: var(--ink-soft);
+  background-color: var(--paper);
 
-  line-height: 1.5;
+  /* Layered paper: warm blooms + faint laid-paper fibers.
+     The grain itself is applied by body::after. */
+  background-image:
+    radial-gradient(
+      ellipse 80% 50% at 15% 0%,
+      rgba(247, 221, 230, 0.5),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 92% 22%,
+      rgba(236, 226, 202, 0.7),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 70% 40% at 40% 100%,
+      rgba(232, 220, 196, 0.55),
+      transparent 65%
+    ),
+    repeating-linear-gradient(
+      92deg,
+      rgba(150, 135, 105, 0.045) 0 1px,
+      transparent 1px 4px
+    ),
+    repeating-linear-gradient(
+      2deg,
+      rgba(150, 135, 105, 0.035) 0 1px,
+      transparent 1px 6px
+    );
+  background-attachment: fixed;
+
+  overflow-x: hidden;
+}
+
+/* Photocopy grain laid over the whole page */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23g)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
 }
 
 a {
   color: inherit;
 }
 
-img {
-  max-width: 100%;
-  display: block;
+:focus-visible {
+  outline: 2px solid var(--pink-deep);
+  outline-offset: 3px;
 }
 
-/* ------------------------- */
-/* GENERAL SECTIONS          */
-/* ------------------------- */
-
-section {
-  padding: 6rem var(--page-padding);
+::selection {
+  background: var(--blush-warm);
+  color: var(--ink);
 }
 
-section:not(.hero) {
-  min-height: 70vh;
+/* ---------------------------------------------------------
+   TYPOGRAPHY
+   --------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  text-wrap: balance;
 }
 
-.section-number {
-  margin-bottom: 0.5rem;
+/* The cover name. Capped so the longest word ("Garcia-Sanchez")
+   always fits its column without colliding with the contents list. */
+h1 {
+  margin: 0;
+  font-size: clamp(2.75rem, 7vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+}
 
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  color: var(--gray);
+@media (max-width: 380px) {
+  h1 {
+    font-size: 2.25rem;
+  }
 }
 
 h2 {
-  margin-top: 0;
+  margin: 0;
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
 
-  font-size: clamp(2.5rem, 6vw, 5rem);
+h3 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
   line-height: 1;
+  letter-spacing: -0.015em;
 }
 
-/* ------------------------- */
-/* EXPERIENCE                */
-/* ------------------------- */
-
-.experience-list article {
-  display: grid;
-
-  grid-template-columns: 100px 1fr 1fr;
-
-  gap: 2rem;
-
-  padding: 2rem 0;
-
-  border-top: 1px solid var(--ink);
+p {
+  text-wrap: pretty;
 }
 
-.experience-list article:last-child {
-  border-bottom: 1px solid var(--ink);
+/* Standfirst / opening paragraph, set in the display serif */
+.lede {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.1vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.38;
+  color: var(--ink);
 }
 
+/* Small sans caption, the workhorse of the layout */
+.caption {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gray);
+}
 
-/* ------------------------- */
-/* FOOTER                    */
-/* ------------------------- */
+/* All-caps micro label: "FIG. 01", "ARCHIVE", section kickers */
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--gray);
+}
+
+/* Handwritten marker annotation */
+.hand {
+  font-family: var(--font-hand);
+  font-size: clamp(1.15rem, 1.9vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--pink-deep);
+}
+
+.hand-ink {
+  color: var(--ink);
+}
+
+/* Marker highlighter swipe behind text */
+.marker {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 12%,
+    var(--blush-warm) 12% 88%,
+    transparent 88%
+  );
+  padding: 0 0.08em;
+  box-decoration-break: clone;
+}
+
+/* ---------------------------------------------------------
+   SECTION SCAFFOLD
+   Editorial structure: numbering, kickers, hairline rules.
+   --------------------------------------------------------- */
+
+section {
+  position: relative;
+  padding: clamp(4.5rem, 9vw, 8rem) var(--page-padding);
+}
+
+.section-head {
+  position: relative;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* The "01 / 02 / 03" folio number */
+.section-number {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+
+  margin: 0 0 1rem;
+
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--gray);
+}
+
+.section-number::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--hairline);
+}
+
+/* Hairline divider between spreads */
+.rule {
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--hairline);
+}
+
+/* ---------------------------------------------------------
+   MATERIALS — photos, tape, torn edges
+   --------------------------------------------------------- */
+
+/* Black-and-white, slightly photocopied photography.
+   Color washes back in on hover so the images stay alive. */
+.photo {
+  filter: grayscale(1) contrast(1.14) brightness(1.02);
+  transition: filter 0.5s ease;
+}
+
+.photo:hover {
+  filter: grayscale(0.15) contrast(1.05) brightness(1);
+}
+
+/* A pasted-in print: white border, drop shadow, slight tilt */
+.print {
+  position: relative;
+  padding: 0.75rem 0.75rem 0.75rem;
+  background: var(--card);
+  box-shadow:
+    0 1px 1px rgba(20, 17, 15, 0.06),
+    0 10px 24px rgba(20, 17, 15, 0.12);
+}
+
+/* Deckled/torn bottom edge. The bumps are painted in the page
+   color so they read as paper torn away from the element. */
+.torn-bottom {
+  position: relative;
+}
+
+.torn-bottom::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 12px;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+        circle at 50% 100%,
+        var(--torn-color, var(--paper)) 0 5px,
+        transparent 5.5px
+      )
+      0 100% / 17px 12px repeat-x,
+    radial-gradient(
+        circle at 50% 100%,
+        var(--torn-color, var(--paper)) 0 4px,
+        transparent 4.5px
+      )
+      9px 100% / 11px 9px repeat-x;
+}
+
+/* ---------------------------------------------------------
+   COLLAGE HELPERS
+   Small, intentional rotations. Everything stays on a grid
+   underneath so the page reads assembled, not sloppy.
+   --------------------------------------------------------- */
+
+.tilt-l {
+  transform: rotate(-2deg);
+}
+
+.tilt-r {
+  transform: rotate(2deg);
+}
+
+.tilt-l-sm {
+  transform: rotate(-1deg);
+}
+
+.tilt-r-sm {
+  transform: rotate(1deg);
+}
+
+/* A torn-out note on blush paper */
+.note {
+  position: relative;
+  padding: 1.25rem 1.4rem;
+  background: var(--blush);
+  box-shadow: 0 6px 16px rgba(20, 17, 15, 0.09);
+}
+
+/* ---------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------- */
 
 footer {
-  padding: 3rem var(--page-padding);
-
-  border-top: 1px solid var(--ink);
+  padding: clamp(3rem, 6vw, 5rem) var(--page-padding);
+  border-top: 2px solid var(--rule);
 }
 
+/* ---------------------------------------------------------
+   MOTION
+   --------------------------------------------------------- */
 
-/* ------------------------- */
-/* MOBILE                    */
-/* ------------------------- */
-
-@media (max-width: 750px) {
-  nav {
-    display: none;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .experience-list article {
-    grid-template-columns: 1fr;
-    gap: 0.25rem;
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   SMALL SCREENS
+   Straighten the collage so it stays readable.
+   --------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .tilt-l,
+  .tilt-r,
+  .tilt-l-sm,
+  .tilt-r-sm {
+    transform: rotate(0deg);
   }
 }

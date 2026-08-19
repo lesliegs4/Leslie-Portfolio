@@ -1,80 +1,101 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
+import Doodle from "./Doodle.astro";
+
+const projects = [
+  {
+    title: "TriageLens",
+    year: "2026",
+    type: "iOS / Emergency Response",
+    description:
+      "An iOS app built at USC AthenaHacks that uses camera-based vital sign estimation to help first responders assess patients more quickly during high-pressure emergencies.",
+    video: "/images/projects/triagelens-demo.mp4",
+    award: "Best Overall + Best Hack by Bloomberg Engineering",
+    note: "36 hours, zero sleep, one very good demo",
+  },
+  {
+    title: "LoRa Sensor Network",
+    year: "2025",
+    type: "IoT / Embedded Systems / Research",
+    description:
+      "A long-range, low-power IoT sensor network built during my research internship at RWTH Aachen University for off-grid environmental monitoring using LoRa, Raspberry Pi Pico, and secure Meshtastic communication.",
+    image: "/images/projects/lora-project.jpeg",
+    note: "range tested across an actual German forest",
+  },
+];
 ---
 
 <section id="projects" class="projects">
-  <div class="projects-heading">
-    <p class="section-number">02</p>
+  <div class="section-head projects-head">
+    <p class="section-number"><span>02</span> Selected Work</p>
 
-    <h2>Projects</h2>
+    <div class="projects-title">
+      <h2>Projects</h2>
 
-    <p class="projects-note">
-      things I've built, broken, fixed, and learned from
-    </p>
+      <p class="hand projects-note">
+        things I've built, broken, fixed, and learned from
+        <Doodle type="squiggle" width="120px" stroke={2} />
+      </p>
+    </div>
   </div>
 
   <div class="projects-list">
-    <ProjectCard
-      title="TriageLens"
-      year="2026"
-      type="iOS / Emergency Response"
-      description="An iOS app built at USC AthenaHacks that uses camera-based vital sign estimation to help first responders assess patients more quickly during high-pressure emergencies."
-      video="/images/projects/triagelens-demo.mp4"
-      award="Best Overall + Best Hack by Bloomberg Engineering"
-    />
-
-    <ProjectCard
-      title="LoRa Sensor Network"
-      year="2025"
-      type="IoT / Embedded Systems / Research"
-      description="A long-range, low-power IoT sensor network built during my research internship at RWTH Aachen University for off-grid environmental monitoring using LoRa, Raspberry Pi Pico, and secure Meshtastic communication."
-      image="/images/projects/lora-project.jpeg"
-    />
+    {
+      projects.map((project, i) => (
+        <>
+          {i > 0 && <hr class="rule projects-divider" />}
+          <ProjectCard
+            index={String(i + 1).padStart(2, "0")}
+            flip={i % 2 === 1}
+            {...project}
+          />
+        </>
+      ))
+    }
   </div>
+
+  <p class="caption projects-footnote">
+    More in the archive &mdash; write-ups and repositories coming soon.
+  </p>
 </section>
 
 <style>
-  .projects-heading {
-    margin-bottom: 4rem;
-  }
-
-  .section-number {
-    margin: 0 0 0.5rem;
-
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-
-    color: var(--gray);
-  }
-
-  h2 {
-    margin: 0;
-
-    font-size: clamp(3rem, 7vw, 6rem);
-    line-height: 0.9;
+  .projects-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: clamp(1rem, 4vw, 3rem);
   }
 
   .projects-note {
-    margin: 1rem 0 0 3rem;
-
-    max-width: 400px;
-
-    font-size: 1rem;
-    font-style: italic;
+    max-width: 22ch;
+    margin: 0 0 0.75rem;
 
     transform: rotate(-2deg);
   }
 
+  .projects-note :global(.doodle) {
+    display: block;
+    margin-top: 0.15rem;
+    color: var(--pink);
+  }
+
   .projects-list {
     display: grid;
-    gap: 4rem;
+    gap: 0;
   }
 
-  .projects-list :global(.project-card:nth-child(even)) {
-    transform: rotate(0.5deg);
+  .projects-divider {
+    margin: clamp(1.5rem, 4vw, 3rem) 0;
   }
 
-  .projects-list :global(.project-card:nth-child(odd)) {
-    transform: rotate(-0.5deg);
+  .projects-footnote {
+    margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+    padding-top: 0.9rem;
+
+    font-style: italic;
+    text-align: right;
+
+    border-top: 1px solid var(--hairline);
   }
 </style>

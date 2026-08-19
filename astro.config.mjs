@@ -7,4 +7,6 @@ export default defineConfig({
   // so the site is served from https://lesliegs4.github.io/Leslie-Portfolio/
   site: 'https://lesliegs4.github.io',
   base: '/Leslie-Portfolio',
+
+  devToolbar: { enabled: false },
 });

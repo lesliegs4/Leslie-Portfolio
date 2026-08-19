@@ -1,0 +1,88 @@
+---
+/**
+ * A strip of masking or washi tape with torn ends, used to fix photos,
+ * notes and clippings to the page. Purely decorative.
+ */
+
+interface Props {
+  tone?: "beige" | "pink";
+  class?: string;
+  width?: string;
+  rotate?: number;
+}
+
+const {
+  tone = "beige",
+  class: className = "",
+  width = "120px",
+  rotate = -6,
+} = Astro.props;
+---
+
+<span
+  class={`tape tape-${tone} ${className}`}
+  style={`--tape-width:${width};--tape-rotate:${rotate}deg`}
+  aria-hidden="true"
+></span>
+
+<style>
+  .tape {
+    display: block;
+
+    width: var(--tape-width);
+    height: 26px;
+
+    transform: rotate(var(--tape-rotate));
+
+    /* Multiply lets the paper texture read through the tape */
+    mix-blend-mode: multiply;
+    box-shadow: 0 1px 2px rgba(20, 17, 15, 0.08);
+
+    /* Torn short ends, straight long edges */
+    clip-path: polygon(
+      2% 0%,
+      98% 0%,
+      100% 17%,
+      97% 35%,
+      100% 54%,
+      98% 77%,
+      100% 100%,
+      3% 100%,
+      0% 81%,
+      2% 59%,
+      0% 41%,
+      3% 21%,
+      0% 5%
+    );
+  }
+
+  .tape-beige {
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.22) 0 2px,
+        transparent 2px 7px
+      ),
+      linear-gradient(
+        103deg,
+        rgba(226, 211, 172, 0.72),
+        rgba(236, 224, 192, 0.6) 40%,
+        rgba(219, 202, 160, 0.7)
+      );
+  }
+
+  .tape-pink {
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.26) 0 2px,
+        transparent 2px 7px
+      ),
+      linear-gradient(
+        103deg,
+        rgba(240, 186, 208, 0.66),
+        rgba(247, 214, 228, 0.55) 45%,
+        rgba(236, 175, 200, 0.66)
+      );
+  }
+</style>

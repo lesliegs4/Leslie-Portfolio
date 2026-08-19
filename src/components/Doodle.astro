@@ -1,0 +1,143 @@
+---
+/**
+ * Hand-drawn marker doodles — arrows, circled emphasis, underlines,
+ * squiggles and sparkles used to annotate the page.
+ *
+ * Decorative by default (hidden from screen readers). Pass a `label`
+ * only when the doodle carries meaning on its own.
+ */
+
+type DoodleType =
+  | "arrow-down"
+  | "arrow-curve"
+  | "arrow-right"
+  | "circle"
+  | "underline"
+  | "squiggle"
+  | "sparkle"
+  | "bracket";
+
+interface Props {
+  type: DoodleType;
+  class?: string;
+  width?: string;
+  color?: string;
+  stroke?: number;
+  label?: string;
+}
+
+const {
+  type,
+  class: className = "",
+  width = "80px",
+  color = "var(--pink)",
+  stroke = 2.2,
+  label,
+} = Astro.props;
+
+const doodles: Record<
+  DoodleType,
+  { viewBox: string; paths: string[]; fills?: string[] }
+> = {
+  "arrow-down": {
+    viewBox: "0 0 58 108",
+    paths: [
+      "M30 5 C 36 28, 20 44, 28 68 C 31 80, 29 92, 28 100",
+      "M15 84 C 20 91, 25 96, 28 103 C 31 95, 36 89, 43 83",
+    ],
+  },
+  "arrow-curve": {
+    viewBox: "0 0 124 104",
+    paths: [
+      "M114 9 C 106 40, 84 64, 52 76 C 44 79, 36 80, 29 79",
+      "M47 62 C 41 70, 34 76, 26 79 C 34 84, 40 90, 43 99",
+    ],
+  },
+  "arrow-right": {
+    viewBox: "0 0 132 42",
+    paths: [
+      "M4 26 C 32 8, 76 6, 120 18",
+      "M103 5 C 109 11, 115 16, 123 19 C 115 23, 108 29, 104 36",
+    ],
+  },
+  circle: {
+    viewBox: "0 0 208 116",
+    paths: [
+      "M104 9 C 46 7, 11 32, 12 60 C 13 88, 56 108, 108 106 C 162 104, 197 80, 194 53 C 191 27, 150 8, 98 10",
+      "M112 16 C 58 15, 22 36, 24 60 C 26 86, 66 101, 112 100",
+    ],
+  },
+  underline: {
+    viewBox: "0 0 208 26",
+    paths: [
+      "M5 11 C 52 3, 124 17, 202 7",
+      "M10 19 C 64 11, 136 24, 197 15",
+    ],
+  },
+  squiggle: {
+    viewBox: "0 0 204 22",
+    paths: [
+      "M3 13 Q 15 1 27 13 T 51 13 T 75 13 T 99 13 T 123 13 T 147 13 T 171 13 T 195 13",
+    ],
+  },
+  sparkle: {
+    viewBox: "0 0 42 42",
+    paths: [],
+    fills: [
+      "M21 1 C 23.5 14, 28 18.5, 41 21 C 28 23.5, 23.5 28, 21 41 C 18.5 28, 14 23.5, 1 21 C 14 18.5, 18.5 14, 21 1 Z",
+    ],
+  },
+  bracket: {
+    viewBox: "0 0 26 208",
+    paths: [
+      "M19 5 C 9 12, 14 44, 8 66 C 5 78, 3 96, 9 104 C 3 112, 5 130, 8 142 C 14 164, 9 196, 19 203",
+    ],
+  },
+};
+
+const { viewBox, paths, fills = [] } = doodles[type];
+const decorative = !label;
+---
+
+<svg
+  class={`doodle ${className}`}
+  viewBox={viewBox}
+  fill="none"
+  style={`--doodle-width:${width};--doodle-color:${color};--doodle-stroke:${stroke}`}
+  role={decorative ? "presentation" : "img"}
+  aria-hidden={decorative ? "true" : undefined}
+  aria-label={label}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {label && <title>{label}</title>}
+
+  {paths.map((d) => <path d={d} />)}
+  {fills.map((d) => <path class="doodle-fill" d={d} />)}
+</svg>
+
+<style>
+  .doodle {
+    width: var(--doodle-width);
+    height: auto;
+
+    overflow: visible;
+    pointer-events: none;
+
+    color: var(--doodle-color);
+  }
+
+  .doodle path {
+    stroke: currentColor;
+    stroke-width: var(--doodle-stroke);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    /* Keeps the marker weight consistent no matter how the SVG is scaled */
+    vector-effect: non-scaling-stroke;
+  }
+
+  .doodle .doodle-fill {
+    fill: currentColor;
+    stroke: none;
+  }
+</style>

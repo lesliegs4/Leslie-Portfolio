@@ -1,23 +1,39 @@
 ---
+import "@fontsource-variable/bodoni-moda";
+import "@fontsource-variable/archivo";
+import "@fontsource-variable/caveat";
 import "../styles/global.css";
+
 import Navigation from "../components/Navigation.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
 import Projects from "../components/Projects.astro";
+import Experience from "../components/Experience.astro";
+import Press from "../components/Press.astro";
+import Writing from "../components/Writing.astro";
+import Footer from "../components/Footer.astro";
+import { withBase } from "../utils/withBase";
 
 const pageTitle = "Leslie Garcia-Sanchez";
+const description =
+  "Portfolio of Leslie Garcia-Sanchez — computer engineer, cybersecurity student, researcher, and builder.";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="Portfolio of Leslie Garcia-Sanchez — engineer, researcher, and builder."
-    />
-    <title>{pageTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f0e6" />
+
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <title>{pageTitle} — Portfolio</title>
   </head>
 
   <body>
@@ -25,66 +41,30 @@ const pageTitle = "Leslie Garcia-Sanchez";
 
     <main>
       <Hero />
+      <hr class="rule spread-rule" />
+
       <About />
-	  <Projects />
+      <hr class="rule spread-rule" />
 
-      <!-- EXPERIENCE -->
-      <section id="experience">
-        <p class="section-number">03</p>
-        <h2>Professional Experience</h2>
+      <Projects />
+      <hr class="rule spread-rule" />
 
-        <div class="experience-list">
-          <article>
-            <p>2026</p>
-            <h3>Viasat</h3>
-            <p>Software Development Engineering Intern</p>
-          </article>
+      <Experience />
+      <hr class="rule spread-rule" />
 
-          <article>
-            <p>2025</p>
-            <h3>RWTH Aachen University</h3>
-            <p>UROP Research Intern</p>
-          </article>
+      <Press />
+      <hr class="rule spread-rule" />
 
-          <article>
-            <p>2024</p>
-            <h3>Sustainability Page</h3>
-            <p>Software Development Engineering Intern</p>
-          </article>
-
-          <article>
-            <p>2023</p>
-            <h3>Apple Design Discovery Program</h3>
-            <p>College Track Scholar Experience Leader</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- PUBLICATIONS -->
-      <section id="press">
-        <p class="section-number">04</p>
-        <h2>Publications + Press</h2>
-
-        <p>
-          Research, awards, features, press, and other things with my name
-          attached to them will live here.
-        </p>
-      </section>
-
-      <!-- WRITING -->
-      <section id="writing">
-        <p class="section-number">05</p>
-        <h2>Writing + Photos</h2>
-
-        <p>
-          A collection of writing, photography, travel notes, and things I
-          want to remember.
-        </p>
-      </section>
+      <Writing />
     </main>
 
-    <footer>
-      <p>Made by Leslie Garcia-Sanchez.</p>
-    </footer>
+    <Footer />
   </body>
 </html>
+
+<style>
+  /* Hairline between spreads, inset to the text column */
+  .spread-rule {
+    margin-inline: var(--page-padding);
+  }
+</style>

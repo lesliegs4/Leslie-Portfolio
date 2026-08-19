@@ -1,0 +1,192 @@
+---
+import Doodle from "./Doodle.astro";
+import Tape from "./Tape.astro";
+import { withBase } from "../utils/withBase";
+
+const archive = [
+  { label: "Award", text: "AthenaHacks — Best Overall", status: "2026" },
+  {
+    label: "Award",
+    text: "Best Hack by Bloomberg Engineering",
+    status: "2026",
+  },
+  { label: "Research", text: "UROP write-up, RWTH Aachen", status: "Soon" },
+  { label: "Feature", text: "Press + interviews", status: "Soon" },
+];
+---
+
+<section id="press" class="press">
+  <div class="section-head">
+    <p class="section-number"><span>04</span> The Clippings File</p>
+
+    <h2>Publications<br />+ Press</h2>
+  </div>
+
+  <div class="press-grid">
+    <!-- FEATURED CLIPPING -->
+    <figure class="print clipping tilt-l">
+      <Tape tone="pink" width="120px" rotate={-9} class="clipping-tape" />
+
+      <img
+        class="photo"
+        src={withBase("/images/projects/triagelens-bestoverall.jpeg")}
+        alt="The TriageLens team accepting the Best Overall award at AthenaHacks"
+        loading="lazy"
+      />
+
+      <figcaption>
+        <p class="label">Fig. 03 &middot; AthenaHacks 2026</p>
+        <p class="caption">
+          The TriageLens team, moments after Best Overall was announced.
+        </p>
+      </figcaption>
+    </figure>
+
+    <!-- ARCHIVE LIST -->
+    <div class="press-copy">
+      <p class="lede">
+        Research, awards, features, press, and other things with my name
+        attached to them live here.
+      </p>
+
+      <p class="hand press-note">
+        <Doodle type="arrow-down" width="20px" stroke={2.4} />
+        the file is still growing
+      </p>
+
+      <dl class="archive">
+        {
+          archive.map(({ label, text, status }) => (
+            <div class="archive-row">
+              <dt class="label">{label}</dt>
+              <dd>{text}</dd>
+              <span class={`archive-status ${status === "Soon" ? "is-soon" : ""}`}>
+                {status}
+              </span>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .press-grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.1fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  /* ---- clipping ---- */
+
+  .clipping {
+    margin: 0;
+    max-width: 460px;
+  }
+
+  .clipping :global(.clipping-tape) {
+    position: absolute;
+    top: -13px;
+    left: -18px;
+  }
+
+  .clipping img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .clipping figcaption {
+    margin-top: 0.7rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .clipping figcaption p {
+    margin: 0;
+  }
+
+  .clipping figcaption .label {
+    margin-bottom: 0.25rem;
+    color: var(--pink-deep);
+  }
+
+  /* ---- archive list ---- */
+
+  .press-copy .lede {
+    margin: 0;
+    max-width: 34ch;
+  }
+
+  .press-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    margin: 1.5rem 0 0;
+    transform: rotate(-2deg);
+  }
+
+  .archive {
+    margin: 2.5rem 0 0;
+    border-top: 2px solid var(--rule);
+  }
+
+  .archive-row {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: baseline;
+
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .archive-row dt {
+    margin: 0;
+  }
+
+  .archive-row dd {
+    margin: 0;
+
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .archive-status {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+
+    padding: 0.2rem 0.5rem;
+    background: var(--blush);
+  }
+
+  .archive-status.is-soon {
+    color: var(--gray);
+    background: transparent;
+    border: 1px dashed var(--gray-light);
+  }
+
+  @media (max-width: 900px) {
+    .press-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .archive-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .archive-row dt {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

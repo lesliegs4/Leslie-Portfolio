@@ -1,0 +1,325 @@
+---
+import Doodle from "./Doodle.astro";
+import { withBase } from "../utils/withBase";
+
+const frames = [
+  {
+    src: "/images/projects/germany-team.jpeg",
+    alt: "Research team in Germany",
+    number: "12A",
+    caption: "Aachen",
+  },
+  {
+    src: "/images/about/viasat-interns.jpeg",
+    alt: "Viasat intern cohort",
+    number: "13",
+    caption: "Carlsbad",
+  },
+  {
+    src: "/images/projects/lora-project.jpeg",
+    alt: "LoRa sensor hardware on a workbench",
+    number: "14A",
+    caption: "Bench",
+    marked: true,
+  },
+  {
+    src: "/images/about/leslie-portrait.jpeg",
+    alt: "Portrait of Leslie Garcia-Sanchez",
+    number: "15",
+    caption: "Self",
+  },
+];
+
+const index = [
+  { title: "Travel notes", detail: "Places, trains, and long walks" },
+  { title: "Photo essays", detail: "Film scans + contact sheets" },
+  { title: "Build logs", detail: "What broke and how I fixed it" },
+];
+---
+
+<section id="writing" class="writing">
+  <div class="section-head">
+    <p class="section-number"><span>05</span> The Back Pages</p>
+
+    <div class="writing-title">
+      <h2>Writing<br />+ Photos</h2>
+
+      <p class="lede writing-lede">
+        A collection of writing, photography, travel notes, and things I want to
+        remember.
+      </p>
+    </div>
+  </div>
+
+  <!-- CONTACT SHEET -->
+  <figure class="contact-sheet tilt-r-sm">
+    <div class="sheet-head">
+      <p class="sheet-title">Contact Sheet &mdash; Roll 01</p>
+      <p class="sheet-meta">ISO 400 &middot; B&amp;W &middot; Ongoing</p>
+    </div>
+
+    <div class="sprockets" aria-hidden="true"></div>
+
+    <div class="frames">
+      {
+        frames.map(({ src, alt, number, caption, marked }) => (
+          <div class="frame">
+            <img class="photo" src={withBase(src)} alt={alt} loading="lazy" />
+
+            {marked && (
+              <Doodle
+                type="circle"
+                width="112%"
+                class="frame-mark"
+                color="var(--pink)"
+                stroke={2.5}
+              />
+            )}
+
+            <p class="frame-meta">
+              <span class="frame-number">{number}</span>
+              <span class="frame-caption">{caption}</span>
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="sprockets" aria-hidden="true"></div>
+
+    <figcaption class="caption sheet-caption">
+      Selects marked in pink. Full rolls to be scanned and posted.
+    </figcaption>
+  </figure>
+
+  <!-- COMING INDEX -->
+  <div class="writing-index">
+    <p class="hand writing-note">
+      coming to these pages
+      <Doodle type="arrow-right" width="52px" color="var(--gray-light)" />
+    </p>
+
+    <ol>
+      {
+        index.map(({ title, detail }, i) => (
+          <li>
+            <span class="label writing-index-number">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3>{title}</h3>
+            <p class="caption">{detail}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .writing-title {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 4rem);
+    align-items: end;
+  }
+
+  .writing-lede {
+    max-width: 34ch;
+    margin: 0 0 0.5rem;
+  }
+
+  /* ---- contact sheet ---- */
+
+  .contact-sheet {
+    margin: 0;
+    padding: 1.5rem clamp(1rem, 2.5vw, 1.75rem);
+
+    background: #1c1a17;
+    box-shadow: 0 14px 32px rgba(20, 17, 15, 0.25);
+  }
+
+  .sheet-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+
+    margin-bottom: 1rem;
+  }
+
+  .sheet-head p {
+    margin: 0;
+  }
+
+  .sheet-title {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--pink);
+  }
+
+  .sheet-meta {
+    font-family: var(--font-sans);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 230, 0.55);
+  }
+
+  /* Film sprocket holes above and below the frame row */
+  .sprockets {
+    height: 11px;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(245, 240, 230, 0.82) 0 9px,
+      transparent 9px 24px
+    );
+  }
+
+  .frames {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.5rem, 1.4vw, 1rem);
+
+    padding: clamp(0.6rem, 1.5vw, 1rem) 0;
+  }
+
+  .frame {
+    position: relative;
+  }
+
+  .frame img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+
+    /* Pushed contrast so the frames read as a photographic proof print */
+    filter: grayscale(1) contrast(1.3) brightness(0.95);
+    transition: filter 0.5s ease;
+  }
+
+  .frame:hover img {
+    filter: grayscale(0) contrast(1.05) brightness(1);
+  }
+
+  /* Grease-pencil select mark */
+  .frame :global(.frame-mark) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%) rotate(-4deg);
+    opacity: 0.9;
+  }
+
+  .frame-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    margin: 0.45rem 0 0;
+  }
+
+  .frame-number,
+  .frame-caption {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .frame-number {
+    color: var(--pink);
+  }
+
+  .frame-caption {
+    color: rgba(245, 240, 230, 0.5);
+  }
+
+  .sheet-caption {
+    margin-top: 1rem;
+    padding-top: 0.7rem;
+
+    font-style: italic;
+    color: rgba(245, 240, 230, 0.6);
+
+    border-top: 1px solid rgba(245, 240, 230, 0.18);
+  }
+
+  /* ---- coming soon index ---- */
+
+  .writing-index {
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .writing-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    margin: 0 0 1.25rem;
+    transform: rotate(-1.5deg);
+  }
+
+  .writing-index ol {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    border-top: 2px solid var(--rule);
+  }
+
+  .writing-index li {
+    padding: 1.5rem 1.25rem 1.75rem;
+    border-bottom: 1px solid var(--hairline);
+    border-right: 1px solid var(--hairline);
+  }
+
+  .writing-index li:last-child {
+    border-right: 0;
+  }
+
+  .writing-index-number {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: var(--pink-deep);
+  }
+
+  .writing-index h3 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-style: italic;
+  }
+
+  .writing-index p {
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .writing-title {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .frames {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .writing-index ol {
+      grid-template-columns: 1fr;
+    }
+
+    .writing-index li {
+      border-right: 0;
+    }
+  }
+</style>

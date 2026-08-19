@@ -1,115 +1,290 @@
+---
+import Doodle from "./Doodle.astro";
+import Tape from "./Tape.astro";
+
+// Magazine-style cover lines teasing what's further down the page
+const coverLines = [
+  { number: "01", text: "Camera-based triage for first responders" },
+  { number: "02", text: "A LoRa sensor network, built off-grid in Aachen" },
+  { number: "03", text: "Notes from four internships and one design lab" },
+];
+---
+
 <section id="home" class="hero">
-  <div class="hero-intro">
-    <p class="eyebrow">Hello, I'm</p>
+  <div class="hero-grid">
+    <div class="hero-main">
+      <p class="label hero-kicker">
+        Issue 01 &middot; Engineering, Security &amp; Side Quests
+      </p>
 
-    <h1>
-      Leslie
-      <span>Garcia-Sanchez</span>
-    </h1>
+      <h1 class="hero-title">
+        <span class="hero-first">Leslie</span>
+        <span class="hero-last">Garcia&#8209;Sanchez</span>
+      </h1>
 
-    <p class="hero-description">
-      Computer engineer, cybersecurity student, researcher,
-      builder, and collector of side quests.
-    </p>
+      <div class="hero-underline">
+        <Doodle type="underline" width="clamp(180px, 34vw, 420px)" stroke={2} />
+      </div>
 
-    <a class="hero-link" href="#about">
-      More about me ↓
-    </a>
+      <p class="lede hero-lede">
+        Computer engineer, cybersecurity student, researcher, builder, and
+        <span class="marker">collector of side quests</span>.
+      </p>
+
+      <a class="hero-link" href="#about">
+        <span>More about me</span>
+        <Doodle type="arrow-down" width="26px" stroke={2} />
+      </a>
+    </div>
+
+    <aside class="hero-side">
+      <div class="hero-note note tilt-r">
+        <Tape tone="pink" width="108px" rotate={-7} class="hero-note-tape" />
+
+        <p class="label">Currently</p>
+        <p class="hand hand-ink hero-note-text">
+          building things + figuring it out along the way
+        </p>
+      </div>
+
+      <div class="hero-contents">
+        <p class="label hero-contents-head">In this issue</p>
+
+        <ul>
+          {
+            coverLines.map(({ number, text }) => (
+              <li>
+                <span class="hero-contents-number">{number}</span>
+                <span class="hero-contents-text">{text}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <Doodle
+          type="arrow-curve"
+          width="76px"
+          class="hero-contents-arrow"
+          color="var(--gray-light)"
+        />
+      </div>
+    </aside>
   </div>
 
-  <div class="hero-note">
-    <p>currently:</p>
-    <span>building things + figuring it out along the way</span>
-  </div>
+  <p class="caption hero-folio">
+    <span>Portfolio of Leslie Garcia-Sanchez</span>
+    <span aria-hidden="true">&mdash;</span>
+    <span>assembled by hand, mostly at night</span>
+  </p>
 </section>
 
 <style>
   .hero {
-    min-height: calc(100vh - 80px);
-
+    min-height: min(88vh, 900px);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
-    gap: 4rem;
-
-    padding: var(--page-padding);
+    padding-top: clamp(3rem, 7vw, 6rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
-  .hero-intro {
-    max-width: 900px;
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(240px, 0.75fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
   }
 
-  .eyebrow {
-    margin: 0 0 1rem;
+  /* ---- masthead type ---- */
 
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-
-    color: var(--gray);
+  .hero-kicker {
+    margin: 0 0 1.75rem;
   }
 
-  h1 {
-    margin: 0;
-
-    font-size: clamp(4rem, 10vw, 9rem);
-    line-height: 0.85;
-    letter-spacing: -0.06em;
+  .hero-title {
+    display: flex;
+    flex-direction: column;
   }
 
-  h1 span {
-    display: block;
+  .hero-first {
+    font-weight: 500;
   }
 
-  .hero-description {
-    max-width: 550px;
+  /* The surname carries the fashion-magazine italic */
+  .hero-last {
+    margin-left: clamp(0.5rem, 4vw, 3.5rem);
 
-    margin: 2rem 0;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.045em;
+  }
 
-    font-size: 1.2rem;
+  .hero-underline {
+    margin: 0.4rem 0 0 clamp(0.5rem, 4vw, 3.5rem);
+    color: var(--pink);
+  }
+
+  .hero-lede {
+    max-width: 40ch;
+    margin: 2.25rem 0 0;
   }
 
   .hero-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
 
+    margin-top: 2.5rem;
+    padding-bottom: 0.3rem;
+
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
     text-decoration: none;
-    border-bottom: 1px solid var(--ink);
+    color: var(--ink);
 
-    padding-bottom: 0.2rem;
+    border-bottom: 1px solid var(--ink);
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .hero-link :global(.doodle) {
+    transition: transform 0.3s ease;
+  }
+
+  .hero-link:hover {
+    color: var(--pink-deep);
+    border-bottom-color: var(--pink);
+  }
+
+  .hero-link:hover :global(.doodle) {
+    transform: translateY(3px);
+  }
+
+  /* ---- taped note ---- */
+
+  .hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+
+    padding-top: 1.5rem;
   }
 
   .hero-note {
-    max-width: 220px;
-
-    padding: 1.5rem;
-
-    background: var(--soft-pink);
-
-    transform: rotate(3deg);
+    max-width: 250px;
   }
 
-  .hero-note p {
-    margin: 0 0 0.5rem;
-
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  .hero-note :global(.hero-note-tape) {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    margin-left: -54px;
   }
 
-  .hero-note span {
-    font-size: 1rem;
+  .hero-note p.label {
+    margin: 0 0 0.35rem;
+    color: var(--pink-deep);
   }
 
-  @media (max-width: 800px) {
-    .hero {
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
+  .hero-note-text {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  /* ---- cover lines / contents ---- */
+
+  .hero-contents {
+    position: relative;
+    max-width: 270px;
+  }
+
+  .hero-contents-head {
+    margin: 0 0 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  .hero-contents ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero-contents li {
+    display: grid;
+    grid-template-columns: 1.9rem 1fr;
+    gap: 0.4rem;
+
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .hero-contents-number {
+    font-family: var(--font-sans);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    line-height: 1.9;
+    color: var(--pink-deep);
+  }
+
+  .hero-contents-text {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .hero-contents :global(.hero-contents-arrow) {
+    position: absolute;
+    right: -12px;
+    bottom: -66px;
+    transform: rotate(-155deg);
+  }
+
+  /* ---- footer line of the cover ---- */
+
+  .hero-folio {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+
+    margin: clamp(3rem, 6vw, 5rem) 0 0;
+    padding-top: 0.9rem;
+
+    font-style: italic;
+    border-top: 1px solid var(--hairline);
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
     }
 
-    .hero-note {
-      transform: rotate(-2deg);
+    .hero-side {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+
+      padding-top: 0;
+    }
+
+    .hero-contents :global(.hero-contents-arrow) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-last {
+      margin-left: 0;
+    }
+
+    .hero-underline {
+      margin-left: 0;
     }
   }
 </style>

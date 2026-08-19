@@ -1,269 +1,326 @@
 ---
+import Doodle from "./Doodle.astro";
+import Tape from "./Tape.astro";
 import { withBase } from "../utils/withBase";
+
+const facts = [
+  { label: "Studying", value: "Computer Engineering + Computer Science" },
+  { label: "Also studying", value: "Cybersecurity" },
+  {
+    label: "Interested in",
+    value: "Security, embedded systems, IoT + product development",
+  },
+  { label: "Currently", value: "Finishing school + figuring out what's next" },
+];
 ---
 
 <section id="about" class="about">
-  <div class="about-heading">
-    <p class="section-number">01</p>
+  <div class="section-head about-head">
+    <p class="section-number"><span>01</span> About</p>
+
     <h2>About Me</h2>
 
-    <p class="handwritten-note">
-      a little bit about who I am ↓
+    <p class="hand about-note">
+      a little bit about who I am
+      <Doodle type="arrow-down" width="22px" stroke={2.4} />
     </p>
   </div>
 
   <div class="about-grid">
-    <div class="photo-area">
-      <div class="photo-placeholder">
+    <!-- PHOTO COLLAGE -->
+    <div class="about-photos">
+      <figure class="print photo-main tilt-l">
+        <Tape tone="beige" width="132px" rotate={-8} class="tape-top-left" />
+        <Tape tone="beige" width="112px" rotate={7} class="tape-bottom-right" />
+
         <img
-            src={withBase("/images/about/leslie-portrait.jpeg")}
-            alt="Leslie Garcia-Sanchez"
+          class="photo"
+          src={withBase("/images/about/leslie-portrait.jpeg")}
+          alt="Leslie Garcia-Sanchez"
+          loading="lazy"
         />
+
+        <figcaption class="caption">
+          <span class="label">Fig. 01</span>
+          probably somewhere building, traveling, or taking too many photos
+        </figcaption>
+      </figure>
+
+      <figure class="print photo-inset tilt-r">
+        <Tape tone="pink" width="86px" rotate={-14} class="tape-top-left" />
+
+        <img
+          class="photo"
+          src={withBase("/images/about/viasat-interns.jpeg")}
+          alt="Leslie with her fellow Viasat interns"
+          loading="lazy"
+        />
+
+        <figcaption class="caption">
+          <span class="label">Fig. 02</span>
+          the intern cohort, Viasat
+        </figcaption>
+      </figure>
     </div>
 
-      <p class="photo-caption">
-        probably somewhere building, traveling, or taking too many photos
-      </p>
-    </div>
-
+    <!-- COPY -->
     <div class="about-copy">
-      <p class="intro">
-        Hi! I'm Leslie — a computer engineering and computer science student
-        with an interest in cybersecurity, embedded systems, and building
-        technology that interacts with the real world.
+      <p class="lede">
+        Hi! I'm Leslie &mdash; a computer engineering and computer science
+        student with an interest in cybersecurity, embedded systems, and
+        building technology that interacts with the real world.
       </p>
 
-      <p>
-        I've worked across software engineering, security research, IoT, and
-        design-focused environments. I especially enjoy projects where I can
-        understand how something works from the hardware level all the way up
-        to the user experience.
-      </p>
+      <div class="about-columns">
+        <p>
+          I've worked across software engineering, security research, IoT, and
+          design-focused environments. I especially enjoy projects where I can
+          understand how something works from the hardware level all the way up
+          to the user experience.
+        </p>
 
-      <p>
-        Outside of engineering, I love traveling, documenting the places I go,
-        trying new things, and collecting little experiences that usually end
-        up turning into another idea or side project.
-      </p>
-
-      <div class="quick-facts">
-        <div class="fact">
-          <span class="fact-label">studying</span>
-          <p>Computer Engineering + Computer Science</p>
-        </div>
-
-        <div class="fact">
-          <span class="fact-label">also studying</span>
-          <p>Cybersecurity</p>
-        </div>
-
-        <div class="fact">
-          <span class="fact-label">interested in</span>
-          <p>Security, embedded systems, IoT + product development</p>
-        </div>
-
-        <div class="fact">
-          <span class="fact-label">currently</span>
-          <p>finishing school + figuring out what's next</p>
-        </div>
+        <p>
+          Outside of engineering, I love traveling, documenting the places I go,
+          trying new things, and collecting little experiences that usually end
+          up turning into another idea or side project.
+        </p>
       </div>
+
+      <div class="about-annotation">
+        <Doodle type="arrow-right" width="58px" color="var(--gray-light)" />
+        <p class="hand">hardware → software → the person using it</p>
+      </div>
+
+      <!-- FACT LEDGER -->
+      <dl class="facts">
+        {
+          facts.map(({ label, value }) => (
+            <div class="fact">
+              <dt class="label">{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
   </div>
 
   <div class="about-doodle">
-    <span>✦</span>
-    <p>more than just the résumé</p>
+    <Doodle type="sparkle" width="22px" />
+    <p class="hand">more than just the résumé</p>
   </div>
 </section>
 
 <style>
   .about {
-    position: relative;
     overflow: hidden;
   }
 
-  .about-heading {
-    margin-bottom: 4rem;
-  }
+  /* ---- heading ---- */
 
-  .section-number {
-    margin: 0 0 0.5rem;
-
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-
-    color: var(--gray);
-  }
-
-  h2 {
-    margin: 0;
-
-    font-size: clamp(3rem, 7vw, 6rem);
-    line-height: 0.9;
-  }
-
-  .handwritten-note {
-    display: inline-block;
-
-    margin: 1rem 0 0 4rem;
-
-    font-size: 1.1rem;
-    font-style: italic;
-
-    transform: rotate(-3deg);
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: minmax(250px, 0.8fr) minmax(300px, 1.2fr);
-
-    gap: clamp(3rem, 8vw, 8rem);
-
-    align-items: start;
-  }
-
-  .photo-area {
+  .about-head {
     position: relative;
   }
 
-  .photo-placeholder {
-    aspect-ratio: 4 / 5;
+  .about-note {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 0.5rem;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 1rem;
-
-    background: #ded8ce;
-
-    border: 10px solid white;
-
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    margin: 0.75rem 0 0 clamp(1rem, 6vw, 6rem);
 
     transform: rotate(-3deg);
   }
 
-  .photo-placeholder span {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+  /* ---- collage ---- */
 
-    color: var(--gray);
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.85fr) minmax(320px, 1.15fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    align-items: start;
   }
 
-  .photo-caption {
-    max-width: 280px;
-
-    margin: 1.5rem auto 0;
-
-    font-size: 0.85rem;
-    text-align: center;
-
-    transform: rotate(2deg);
+  .about-photos {
+    position: relative;
+    padding-bottom: 5rem;
   }
+
+  .print figure,
+  .print {
+    margin: 0;
+  }
+
+  .photo-main img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  /* Smaller snapshot overlapping the main print — the collage moment */
+  .photo-inset {
+    position: absolute;
+    right: -8%;
+    bottom: 0;
+
+    width: 46%;
+    max-width: 190px;
+  }
+
+  .photo-inset img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  .print figcaption {
+    margin-top: 0.6rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .print figcaption .label {
+    display: block;
+    margin-bottom: 0.15rem;
+    color: var(--pink-deep);
+  }
+
+  .photo-inset figcaption {
+    font-size: 0.68rem;
+  }
+
+  /* Tape placement on the prints */
+  .print :global(.tape-top-left) {
+    position: absolute;
+    top: -14px;
+    left: -22px;
+  }
+
+  .print :global(.tape-bottom-right) {
+    position: absolute;
+    right: -26px;
+    bottom: 22%;
+  }
+
+  /* ---- copy ---- */
 
   .about-copy {
-    max-width: 700px;
+    max-width: 68ch;
   }
 
-  .about-copy p {
-    font-size: 1.05rem;
+  .about-copy .lede {
+    margin: 0 0 2rem;
   }
 
-  .intro {
-    margin-top: 0;
-
-    font-size: clamp(1.4rem, 2vw, 1.8rem) !important;
-    line-height: 1.4;
+  /* Two editorial columns on wide screens */
+  .about-columns {
+    columns: 2;
+    column-gap: 2.5rem;
   }
 
-  .quick-facts {
+  .about-columns p {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    break-inside: avoid;
+  }
+
+  .about-annotation {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+
+    margin: 2rem 0 0;
+    transform: rotate(-1.5deg);
+  }
+
+  .about-annotation p {
+    margin: 0;
+  }
+
+  /* ---- fact ledger ---- */
+
+  .facts {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
 
-    gap: 1rem;
-
-    margin-top: 3rem;
+    margin: 3rem 0 0;
+    border-top: 2px solid var(--rule);
   }
 
   .fact {
-    padding: 1.25rem;
+    padding: 1.1rem 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--hairline);
+  }
 
-    border-top: 1px solid var(--ink);
+  .fact:nth-child(odd) {
+    border-right: 1px solid var(--hairline);
   }
 
   .fact:nth-child(2) {
-    background: var(--soft-pink);
-
-    transform: rotate(1deg);
+    background: var(--blush);
   }
 
-  .fact:nth-child(3) {
-    transform: rotate(-1deg);
+  .fact dt {
+    margin-bottom: 0.35rem;
+    color: var(--pink-deep);
   }
 
-  .fact-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+  .fact dd {
+    margin: 0;
 
-    color: var(--gray);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    line-height: 1.35;
+    color: var(--ink);
   }
 
-  .fact p {
-    margin: 0.5rem 0 0;
-
-    font-size: 0.95rem;
-  }
+  /* ---- closing annotation ---- */
 
   .about-doodle {
-    position: absolute;
-
-    right: 4%;
-    bottom: 4rem;
-
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: flex-end;
+    gap: 0.65rem;
 
-    transform: rotate(4deg);
-  }
-
-  .about-doodle span {
-    font-size: 2rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    transform: rotate(3deg);
   }
 
   .about-doodle p {
     margin: 0;
-
-    font-size: 0.9rem;
-    font-style: italic;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .about-grid {
       grid-template-columns: 1fr;
     }
 
-    .photo-area {
-      max-width: 400px;
+    .about-photos {
+      max-width: 420px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .about-columns {
+      columns: 1;
     }
 
-    .quick-facts {
+    .facts {
       grid-template-columns: 1fr;
     }
 
-    .about-doodle {
-      position: static;
-
-      margin-top: 3rem;
-
-      justify-content: flex-end;
+    .fact:nth-child(odd) {
+      border-right: 0;
     }
 
-    .handwritten-note {
-      margin-left: 1rem;
+    .photo-inset {
+      right: -4%;
+      width: 42%;
+    }
+
+    .about-doodle {
+      justify-content: flex-start;
     }
   }
 </style>

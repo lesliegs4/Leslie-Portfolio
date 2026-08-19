@@ -1,0 +1,148 @@
+---
+import Doodle from "./Doodle.astro";
+
+const roles = [
+  {
+    year: "2026",
+    org: "Viasat",
+    title: "Software Development Engineering Intern",
+    tag: "Industry",
+  },
+  {
+    year: "2025",
+    org: "RWTH Aachen University",
+    title: "UROP Research Intern",
+    tag: "Research",
+  },
+  {
+    year: "2024",
+    org: "Sustainability Page",
+    title: "Software Development Engineering Intern",
+    tag: "Industry",
+  },
+  {
+    year: "2023",
+    org: "Apple Design Discovery Program",
+    title: "College Track Scholar Experience Leader",
+    tag: "Program",
+  },
+];
+---
+
+<section id="experience" class="experience">
+  <div class="section-head experience-head">
+    <p class="section-number"><span>03</span> Curriculum Vitae</p>
+
+    <div class="experience-title">
+      <h2>Professional<br />Experience</h2>
+
+      <p class="hand experience-note">
+        four years, four very different rooms
+        <Doodle type="underline" width="150px" stroke={2} />
+      </p>
+    </div>
+  </div>
+
+  <ol class="ledger">
+    {
+      roles.map(({ year, org, title, tag }) => (
+        <li class="ledger-row">
+          <span class="ledger-year">{year}</span>
+
+          <div class="ledger-body">
+            <h3>{org}</h3>
+            <p>{title}</p>
+          </div>
+
+          <span class="label ledger-tag">{tag}</span>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .experience-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(1rem, 4vw, 3rem);
+  }
+
+  .experience-note {
+    max-width: 20ch;
+    margin: 0 0 0.75rem;
+    transform: rotate(2deg);
+  }
+
+  .experience-note :global(.doodle) {
+    display: block;
+    color: var(--pink);
+  }
+
+  /* ---- ledger ---- */
+
+  .ledger {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    border-top: 2px solid var(--rule);
+  }
+
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr) 8rem;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    align-items: baseline;
+
+    padding: clamp(1.5rem, 3vw, 2.25rem) 0.75rem;
+
+    border-bottom: 1px solid var(--hairline);
+    transition: background-color 0.3s ease;
+  }
+
+  .ledger-row:hover {
+    background: rgba(247, 221, 230, 0.45);
+  }
+
+  .ledger-year {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1;
+    color: var(--pink-deep);
+  }
+
+  .ledger-body h3 {
+    margin: 0 0 0.3rem;
+    font-style: normal;
+  }
+
+  .ledger-body p {
+    margin: 0;
+    max-width: 44ch;
+    font-size: 0.92rem;
+  }
+
+  .ledger-tag {
+    justify-self: end;
+    text-align: right;
+  }
+
+  @media (max-width: 760px) {
+    .ledger-row {
+      grid-template-columns: 4.5rem minmax(0, 1fr);
+      gap: 1rem 1.25rem;
+      padding-inline: 0;
+    }
+
+    .ledger-tag {
+      grid-column: 2;
+      justify-self: start;
+      text-align: left;
+    }
+  }
+</style>
