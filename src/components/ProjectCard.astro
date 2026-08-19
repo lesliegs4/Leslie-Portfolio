@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../utils/withBase";
+
 interface Props {
   title: string;
   year: string;
@@ -24,7 +26,7 @@ const {
   <div class="project-media">
     {image && (
       <img
-        src={image}
+        src={withBase(image)}
         alt={`${title} project`}
       />
     )}
@@ -35,7 +37,7 @@ const {
         muted
         playsinline
       >
-        <source src={video} type="video/mp4" />
+        <source src={withBase(video)} type="video/mp4" />
         Your browser does not support video playback.
       </video>
     )}
