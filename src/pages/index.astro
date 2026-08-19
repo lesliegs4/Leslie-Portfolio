@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
+import Projects from "../components/Projects.astro";
 
 const pageTitle = "Leslie Garcia-Sanchez";
 ---
@@ -25,32 +26,7 @@ const pageTitle = "Leslie Garcia-Sanchez";
     <main>
       <Hero />
       <About />
-
-      <!-- PROJECTS -->
-      <section id="projects">
-        <p class="section-number">02</p>
-        <h2>Projects</h2>
-
-        <div class="project-grid">
-          <article>
-            <p>2026 / iOS</p>
-            <h3>TriageLens</h3>
-            <p>
-              Camera-based vital sign estimation and emergency response tools
-              designed for first responders.
-            </p>
-          </article>
-
-          <article>
-            <p>2026 / Embedded Systems</p>
-            <h3>JellySafe</h3>
-            <p>
-              An ESP32-based monitoring system designed to automate jellyfish
-              habitat care.
-            </p>
-          </article>
-        </div>
-      </section>
+	  <Projects />
 
       <!-- EXPERIENCE -->
       <section id="experience">

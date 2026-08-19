@@ -1,0 +1,143 @@
+---
+interface Props {
+  title: string;
+  year: string;
+  type: string;
+  description: string;
+  image?: string;
+  video?: string;
+  award?: string;
+}
+
+const {
+  title,
+  year,
+  type,
+  description,
+  image,
+  video,
+  award,
+} = Astro.props;
+---
+
+<article class="project-card">
+  <div class="project-media">
+    {image && (
+      <img
+        src={image}
+        alt={`${title} project`}
+      />
+    )}
+
+    {video && (
+      <video
+        controls
+        muted
+        playsinline
+      >
+        <source src={video} type="video/mp4" />
+        Your browser does not support video playback.
+      </video>
+    )}
+  </div>
+
+  <div class="project-content">
+    <div class="project-meta">
+      <span>{year}</span>
+      <span>{type}</span>
+    </div>
+
+    <h3>{title}</h3>
+
+    {award && (
+      <p class="award">
+        ✦ {award}
+      </p>
+    )}
+
+    <p class="description">
+      {description}
+    </p>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: grid;
+    grid-template-columns: minmax(250px, 1fr) minmax(250px, 1fr);
+
+    gap: 2rem;
+
+    padding: 2rem;
+
+    border: 1px solid var(--ink);
+
+    background: var(--paper);
+  }
+
+  .project-media {
+    min-height: 300px;
+  }
+
+  .project-media img,
+  .project-media video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+  }
+
+  .project-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .project-meta {
+    display: flex;
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+
+    color: var(--gray);
+  }
+
+  h3 {
+    margin: 0;
+
+    font-size: clamp(2rem, 4vw, 4rem);
+    line-height: 0.95;
+  }
+
+  .award {
+    display: inline-block;
+    width: fit-content;
+    margin: 1.5rem 0 0;
+    padding: 0.5rem 0.8rem;
+    background: var(--soft-pink);
+    transform: rotate(-2deg);
+    font-size: 0.85rem;
+  }
+
+  .description {
+    max-width: 550px;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 800px) {
+    .project-card {
+      grid-template-columns: 1fr;
+    }
+
+    .project-media {
+      min-height: auto;
+    }
+  }
+</style>
